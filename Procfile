@@ -1,0 +1,1 @@
+web: gunicorn kildalaw.wsgi --log-file -
