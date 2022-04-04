@@ -1,1 +1,1 @@
-web: gunicorn kildalaw.wsgi --log-file -
+web: gunicorn crud-app.wsgi --log-file -
