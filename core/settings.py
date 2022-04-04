@@ -3,7 +3,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url 
 
-PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
