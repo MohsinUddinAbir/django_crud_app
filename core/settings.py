@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['crud-app-kildalaw.herokuapp.com']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['crud-app-kildalaw.herokuapp.com']
 AUTH_USER_MODEL = 'user.User'
 
 # Application definition
@@ -42,7 +42,6 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, "apps/templates")
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TEMPLATES = [
     {
@@ -127,3 +126,13 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if os.environ.get("ENV") == "PRODUCTION":
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_PORT = os.environ.get("EMAIL_HOST")
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST")
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = "CRUD App <noreply@crudapp.com>"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

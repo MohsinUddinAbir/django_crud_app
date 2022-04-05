@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block head_title %}{% if update %}Update data{% else %}Add new data{% endif %}{% endblock head_title %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class=" mb-5">{% if update %}Update data{% else %}Add new data{% endif %}</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row">
+          {% for field in form %}
+          <div class="col-sm-6 form-group mb-2">
+            {{ field.errors }}
+            <label for="{{field.id_for_label}}"> {{field.label}} </label>
+            <input id="{{field.id_for_label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}"
+              class="form-control">
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+          <div class="col-sm-6 text-center">
+            <br>
+            <button type="submit" class="btn btn-primary">
+              {% if update %}Update data{% else %}Add data{% endif %}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
