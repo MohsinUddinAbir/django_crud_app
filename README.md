@@ -28,18 +28,14 @@ cd django_crud_app
 pip install -r requirements.txt
 ```
 
-Setup PostgreSQL database name, username and password from /core/settings.py
+Setup PostgreSQL database config from .env
 
-```py
-DATABASES = {
-    'default': {
-         #...
-        'NAME': 'blogapp',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-         #...
-    }
-}
+```bash
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
 ```
 
 Migrate database
