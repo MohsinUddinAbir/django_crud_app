@@ -9,7 +9,6 @@
       <h2 class=" mb-3">{% if update %}Update data{% else %}Add new data{% endif %}</h2>
       <form method="post">
         {% csrf_token %}
-
         <div class="row">
           {% for field in form %}
           <div class="col-sm-6 form-group mb-2">
@@ -29,7 +28,6 @@
             </button>
           </div>
         </div>
-
       </form>
     </div>
   </div>
