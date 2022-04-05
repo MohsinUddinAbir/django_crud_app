@@ -1,3 +1,4 @@
+from email.policy import default
 import os
 from pathlib import Path
 from decouple import config
@@ -8,8 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['crud-app-kildalaw.herokuapp.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+
 AUTH_USER_MODEL = 'user.User'
 
 # Application definition
@@ -67,11 +68,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blogapp',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'NAME': config('DB_NAME', default='blogapp'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', '1234'),
+        'HOST': config('DB_HOST', 'localhost'),
+        'PORT': config('DB_PORT', default=5432, cast=int),
     }
 }
 
@@ -116,7 +117,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'apps/static'),
 )
-
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -127,12 +127,13 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if os.environ.get("ENV") == "PRODUCTION":
-    EMAIL_HOST = os.environ.get("EMAIL_HOST")
-    EMAIL_PORT = os.environ.get("EMAIL_HOST")
-    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST")
-    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST")
+# Email setup
+if config('ENV') == "PRODUCTION":
+    EMAIL_HOST = config("EMAIL_HOST", default='localhost')
+    EMAIL_PORT = config("EMAIL_PORT", default=25, cast=int)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default='')
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default='')
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = "CRUD App <noreply@crudapp.com>"
+    DEFAULT_FROM_EMAIL = "Crud App <noreply@crudapp.com>"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
