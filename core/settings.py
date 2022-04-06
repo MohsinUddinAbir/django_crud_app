@@ -1,8 +1,11 @@
 import os
-from decouple import config
 import dj_database_url 
+from pathlib import Path
+from decouple import config
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
@@ -39,7 +42,7 @@ ROOT_URLCONF = 'core.urls'
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
-TEMPLATE_DIR = os.path.join(BASE_DIR, "public/templates")
+TEMPLATE_DIR = BASE_DIR / "public/templates"
 
 TEMPLATES = [
     {
@@ -106,15 +109,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'public/static'),
-)
+STATIC_ROOT = BASE_DIR / 'static/'
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "public/static/",
+]
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
+MEDIA_ROOT = BASE_DIR / 'public/media/'
 MEDIA_URL = '/media/'
 
 # Default primary key field type

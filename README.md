@@ -11,8 +11,8 @@ https://www.postgresql.org/download/
 Setup Virtual Environments
 
 ```bash
-python3 -m venv django_env
-django_env\Scripts\activate.bat
+python3 -m venv env
+env\Scripts\activate.bat
 ```
 
 Clone this repository
