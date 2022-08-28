@@ -33,7 +33,7 @@ Setup PostgreSQL database config from .env
 ```bash
 DB_NAME=
 DB_USER=
-DB_PASSWORD=
+DB_PASS=
 DB_HOST=
 DB_PORT=
 ```
